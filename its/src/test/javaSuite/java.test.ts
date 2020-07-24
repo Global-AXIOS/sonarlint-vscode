@@ -35,10 +35,21 @@ suite('Java Test Suite', () => {
 			const document = await vscode.workspace.openTextDocument(fileUri);
 			const editor = await vscode.window.showTextDocument(document);
 
+			console.log(JSON.stringify(vscode.workspace.getConfiguration('java.server')));
+
+			console.log('Start waiting for SL diags');
+
 			var diags = await waitForSonarLintDiagnostics(fileUri);
 
+			console.log('Finished waiting for SL diags');
+
 			assert.deepEqual(diags.length, 1);
+
+			console.log('Got 1 diag');
+
 			assert.equal(diags[0].message, 'Replace this use of System.out or System.err by a logger.');
+
+			console.log('Message is correct');
 
 			vscode.commands.executeCommand('workbench.action.closeActiveEditor');
 		} else {
