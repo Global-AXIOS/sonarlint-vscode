@@ -8,5 +8,7 @@
   // Enable auto import of Java projects
   "java.project.importOnFirstTimeStartup": "automatic",
   "editor.suggestSelection": "first",
-  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "sonarlint.output.showAnalyzerLogs": true,
+  "sonarlint.output.showVerboseLogs": true
 }
