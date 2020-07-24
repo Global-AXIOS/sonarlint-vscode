@@ -61,9 +61,11 @@ async function main() {
 		const javaExtensionTestsPath = path.resolve(__dirname, './javaSuite');
 		const javaTestWorkspace = path.resolve(__dirname, '../../samples/workspace-java.code-workspace');
 
-		cp.spawnSync(cliPath, ['--install-extension', 'redhat.java'], {
-			encoding: 'utf-8',
-			stdio: 'inherit'
+		[ 'redhat.java', 'vscjava.vscode-maven' ].forEach(requiredExtensionId => {
+			cp.spawnSync(cliPath, ['--install-extension', requiredExtensionId], {
+				encoding: 'utf-8',
+				stdio: 'inherit'
+			});
 		});
 
 		try {
