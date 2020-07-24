@@ -205,6 +205,13 @@ stages:
           sudo service xvfb start
           export DISPLAY=':10'
         displayName: 'Install and start xvfb'
+      - task: JavaToolInstaller@0
+        displayName: 'Switch to Java 11'
+        inputs:
+          versionSpec: '11'
+          jdkSourceOption: PreInstalled
+          jdkArchitectureOption: x64
+          cleanDestinationDirectory: false
       - task: Npm@1
         displayName: 'Install NPM dependencies'
         inputs:
