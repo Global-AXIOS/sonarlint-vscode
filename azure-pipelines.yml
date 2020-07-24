@@ -217,9 +217,16 @@ stages:
           command: custom
           customCommand: test
       - bash: |
+          echo " "
+          echo " >>>>> SonarLint console"
+          echo " "
           find its/userdir -name '*SonarLint.log' -exec cat {} \;
+          echo " "
+          echo " >>>>> Extension host log"
+          echo " "
+          find its/userdir -name 'exthost.log' -exec cat {} \;
         condition: succeededOrFailed()
-        displayName: 'Dump SonarLint console'
+        displayName: 'Dump Code logs'
       - task: PublishTestResults@2
         condition: succeededOrFailed()
         inputs:
