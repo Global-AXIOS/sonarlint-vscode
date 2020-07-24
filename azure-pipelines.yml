@@ -218,6 +218,7 @@ stages:
           customCommand: test
       - bash: |
           find its/userdir -name '*SonarLint.log' -exec cat {} \;
+        condition: succeededOrFailed()
         displayName: 'Dump SonarLint console'
       - task: PublishTestResults@2
         condition: succeededOrFailed()
