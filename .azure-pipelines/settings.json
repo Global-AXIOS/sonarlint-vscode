@@ -1,0 +1,8 @@
+{
+  // Start with no editor open
+  "workbench.startupEditor": "none",
+  // Disable telemetry pings to Microsoft
+  "telemetry.enableTelemetry": false,
+  // Enable auto import of Java projects
+  "java.project.importOnFirstTimeStartup": "automatic"
+}

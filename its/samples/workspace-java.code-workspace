@@ -4,8 +4,5 @@
 			"path": "./sample-java-maven-multi-module"
 		}
 	],
-	"settings": {
-		"java.import.maven.enabled": true,
-		"java.project.importOnFirstTimeStartup": "automatic"
-	}
+	"settings": {}
 }
