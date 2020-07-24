@@ -29,10 +29,10 @@ export enum ServerMode {
 }
 
 export function installClasspathListener(languageClient: SonarLintExtendedLanguageClient) {
-  const extension: VSCode.Extension<any> | undefined = getJavaExtension();
+  const extension = getJavaExtension();
   if (extension?.isActive) {
     if (!classpathChangeListener) {
-      const extensionApi: any = extension.exports;
+      const extensionApi = extension.exports;
       if (extensionApi && isJavaApiRecentEnough(extensionApi.apiVersion)) {
         const onDidClasspathUpdate: VSCode.Event<VSCode.Uri> = extensionApi.onDidClasspathUpdate;
         classpathChangeListener = onDidClasspathUpdate(function(uri) {
@@ -48,20 +48,24 @@ export function installClasspathListener(languageClient: SonarLintExtendedLangua
   }
 }
 
+function newServerModeChangeListener(languageClient: SonarLintExtendedLanguageClient) {
+  return (serverMode: ServerMode) => {
+    if (serverMode !== ServerMode.LIGHTWEIGHT) {
+      // Reset state of LightWeight mode warning
+      javaServerInLightWeightModeAlreadyLogged = false;
+    }
+    languageClient.onReady().then(() => languageClient.didJavaServerModeChange(serverMode));
+  };
+}
+
 export function installServerModeChangeListener(languageClient: SonarLintExtendedLanguageClient) {
-  const extension: VSCode.Extension<any> | undefined = getJavaExtension();
+  const extension = getJavaExtension();
   if (extension?.isActive) {
     if (!serverModeListener) {
-      const extensionApi: any = extension.exports;
+      const extensionApi = extension.exports;
       if (extensionApi && isJavaApiRecentEnough(extensionApi.apiVersion) && extensionApi.onDidServerModeChange) {
         const onDidServerModeChange: VSCode.Event<ServerMode> = extensionApi.onDidServerModeChange;
-        serverModeListener = onDidServerModeChange(function(serverMode) {
-          if(serverMode !== ServerMode.LIGHTWEIGHT) {
-            // Reset state of LightWeight mode warning
-            javaServerInLightWeightModeAlreadyLogged = false;
-          }
-          languageClient.onReady().then(() => languageClient.didJavaServerModeChange(serverMode));
-        });
+        serverModeListener = onDidServerModeChange(newServerModeChangeListener(languageClient));
       }
     }
   } else {
@@ -87,9 +91,9 @@ export async function getJavaConfig(
   languageClient: SonarLintExtendedLanguageClient,
   fileUri: string
 ): Promise<GetJavaConfigResponse> {
-  const extension: VSCode.Extension<any> | undefined = getJavaExtension();
+  const extension = getJavaExtension();
   try {
-    const extensionApi: any = await extension?.activate();
+    const extensionApi = await extension?.activate();
     console.log(Object.keys(extensionApi));
     if (extensionApi && isJavaApiRecentEnough(extensionApi.apiVersion)) {
       installClasspathListener(languageClient);
