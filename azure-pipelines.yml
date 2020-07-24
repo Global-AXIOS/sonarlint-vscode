@@ -205,10 +205,6 @@ stages:
           sudo service xvfb start
           export DISPLAY=':10'
         displayName: 'Install and start xvfb'
-      - bash: |
-          mkdir -p ${HOME}/.config/Code/User
-          cp .azure-pipelines/settings.json ${HOME}/.config/Code/User
-        displayName: 'Install user settings for Code test instance'
       - task: Npm@1
         displayName: 'Install NPM dependencies'
         inputs:

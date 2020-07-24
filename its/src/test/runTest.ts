@@ -22,6 +22,8 @@ async function main() {
 			process.env['DISPLAY'] = XVFB_DISPLAY;
 		}
 
+		const userDataDir = path.resolve(__dirname, '../../userdir');
+
 		// The folder containing the Extension Manifest package.json
 		// Passed to `--extensionDevelopmentPath`
 		const extensionDevelopmentPath = path.resolve(__dirname, '../../');
@@ -49,7 +51,8 @@ async function main() {
 				// Use the specified `code` executable
 				vscodeExecutablePath,
 				extensionDevelopmentPath,
-				extensionTestsPath
+				extensionTestsPath,
+				launchArgs: [`--user-data-dir=${userDataDir}`]
 			});
 		} catch(testError) {
 			testErrors.push(testError);
@@ -69,7 +72,7 @@ async function main() {
 				vscodeExecutablePath,
 				extensionDevelopmentPath,
 				extensionTestsPath: javaExtensionTestsPath,
-				launchArgs: [javaTestWorkspace]
+				launchArgs: [javaTestWorkspace, `--user-data-dir=${userDataDir}`]
 			});
 		} catch(testError) {
 			testErrors.push(testError);
