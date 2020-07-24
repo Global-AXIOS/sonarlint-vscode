@@ -5,6 +5,7 @@
 		}
 	],
 	"settings": {
-		"java.server.launchMode": "Standard"
+		"java.import.maven.enabled": true,
+		"java.project.importOnFirstTimeStartup": "automatic"
 	}
 }
